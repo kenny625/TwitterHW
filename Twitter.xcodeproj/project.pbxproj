@@ -19,6 +19,8 @@
 		5454483A1B413E37004FBAB8 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 545448391B413E37004FBAB8 /* User.m */; };
 		5454483E1B428203004FBAB8 /* TweetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5454483C1B428203004FBAB8 /* TweetsViewController.m */; };
 		5454483F1B428203004FBAB8 /* TweetsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5454483D1B428203004FBAB8 /* TweetsViewController.xib */; };
+		545448431B43BEDD004FBAB8 /* TweetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 545448411B43BEDD004FBAB8 /* TweetTableViewCell.m */; };
+		545448441B43BEDD004FBAB8 /* TweetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 545448421B43BEDD004FBAB8 /* TweetTableViewCell.xib */; };
 		996AB452BEC4E6C3F8D0C36F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B6ED0F06FF9C94A03808E7 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +58,9 @@
 		5454483B1B428203004FBAB8 /* TweetsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetsViewController.h; sourceTree = "<group>"; };
 		5454483C1B428203004FBAB8 /* TweetsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetsViewController.m; sourceTree = "<group>"; };
 		5454483D1B428203004FBAB8 /* TweetsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetsViewController.xib; sourceTree = "<group>"; };
+		545448401B43BEDD004FBAB8 /* TweetTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetTableViewCell.h; sourceTree = "<group>"; };
+		545448411B43BEDD004FBAB8 /* TweetTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetTableViewCell.m; sourceTree = "<group>"; };
+		545448421B43BEDD004FBAB8 /* TweetTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetTableViewCell.xib; sourceTree = "<group>"; };
 		819D14DD5857E9DC4D3167C8 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		98B6ED0F06FF9C94A03808E7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -125,6 +130,9 @@
 				5454483B1B428203004FBAB8 /* TweetsViewController.h */,
 				5454483C1B428203004FBAB8 /* TweetsViewController.m */,
 				5454483D1B428203004FBAB8 /* TweetsViewController.xib */,
+				545448401B43BEDD004FBAB8 /* TweetTableViewCell.h */,
+				545448411B43BEDD004FBAB8 /* TweetTableViewCell.m */,
+				545448421B43BEDD004FBAB8 /* TweetTableViewCell.xib */,
 			);
 			path = Twitter;
 			sourceTree = "<group>";
@@ -256,6 +264,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				545448441B43BEDD004FBAB8 /* TweetTableViewCell.xib in Resources */,
 				5454483F1B428203004FBAB8 /* TweetsViewController.xib in Resources */,
 				545448171B3D56F2004FBAB8 /* LaunchScreen.xib in Resources */,
 				545448141B3D56F2004FBAB8 /* Images.xcassets in Resources */,
@@ -313,6 +322,7 @@
 				545448331B40DFC6004FBAB8 /* TwitterClient.m in Sources */,
 				5454480C1B3D56F2004FBAB8 /* AppDelegate.m in Sources */,
 				5454483A1B413E37004FBAB8 /* User.m in Sources */,
+				545448431B43BEDD004FBAB8 /* TweetTableViewCell.m in Sources */,
 				545448091B3D56F2004FBAB8 /* main.m in Sources */,
 				5454482F1B3D594A004FBAB8 /* LoginViewController.m in Sources */,
 				545448371B413E1D004FBAB8 /* Tweet.m in Sources */,

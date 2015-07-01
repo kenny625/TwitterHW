@@ -19,6 +19,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationItem.title = @"Home";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(onLogout)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"New" style:UIBarButtonItemStylePlain target:self action:@selector(onNewTweet)];
+    
     // Do any additional setup after loading the view from its nib.
     [[TwitterClient sharedInstance] homeTimeLineWithParams:nil completion:^(NSArray *tweets, NSError *error) {
         for (Tweet *tweet in tweets) {
@@ -32,8 +37,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)onLogout:(id)sender {
+- (void)onLogout {
     [User logout];
+}
+
+- (void)onNewTweet {
+    
 }
 
 /*
