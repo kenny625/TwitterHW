@@ -16,5 +16,7 @@
 - (void)openURL:(NSURL *)url;
 
 - (void)homeTimeLineWithParams:(NSDictionary*) parrams completion:(void (^)(NSArray *tweets, NSError *error))completion;
-
+- (void)replyWithParams:(NSDictionary*) params completion:(void (^)(NSArray *response, NSError *error))completion;
+- (void)retweetWithId:(NSInteger) tweetid completion:(void (^)(NSArray *response, NSError *error))completion;
+- (void)favoriteWithId:(NSInteger) tweetid completion:(void (^)(NSArray *response, NSError *error))completion;
 @end
