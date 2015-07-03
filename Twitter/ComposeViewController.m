@@ -20,7 +20,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(onCancel)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Reply" style:UIBarButtonItemStylePlain target:self action:@selector(onTweet)];
+    if (self.isNewTweet) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tweet" style:UIBarButtonItemStylePlain target:self action:@selector(onTweet)];
+    } else {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Reply" style:UIBarButtonItemStylePlain target:self action:@selector(onTweet)];
+    }
     
     [self.userImg setImageWithURL:[NSURL URLWithString:self.userImgUrl]];
     self.name.text = self.nameStr;
@@ -40,9 +44,13 @@
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setValue:[NSString stringWithFormat:@"%ld", self.tweetId] forKey:@"in_reply_to_status_id"];
     [params setValue:self.textField.text forKey:@"status"];
-    [[TwitterClient sharedInstance] replyWithParams:params completion:^(NSArray *response, NSError *error) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }];
+    if (self.isNewTweet) {
+        
+    } else {
+        [[TwitterClient sharedInstance] replyWithParams:params completion:^(NSArray *response, NSError *error) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+    }
 }
 
 /*

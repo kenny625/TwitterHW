@@ -109,6 +109,7 @@
     composeViewController.screenNameStr = user.screenname;
     composeViewController.userImgUrl = user.profileImageUrl;
     composeViewController.tweetId = self.tweet.tweetId;
+    composeViewController.isNewTweet = FALSE;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:composeViewController];
     [self presentViewController:nav animated:YES completion:nil];
 }
@@ -116,18 +117,26 @@
 - (void)onClickRetweetActionTableViewCell:(ActionTableViewCell *)cell {
     [[TwitterClient sharedInstance] retweetWithId:self.tweet.tweetId completion:^(NSArray *response, NSError *error) {
         [[TwitterClient sharedInstance] homeTimeLineWithParams:nil completion:^(NSArray *tweets, NSError *error) {
-            [self.tableView reloadData];
+            if (error == nil) {
+                self.tweet.retweet_count = self.tweet.retweet_count + 1;
+                self.tweet.retweeted = TRUE;
+                [self.tableView reloadData];
+            } else {
+                NSLog(@"%@", error);
+            }
         }];
-        NSLog(@"%@", response);
-        NSLog(@"%@", error);
     }];
 }
 
 - (void)onClickFavoriteActionTableViewCell:(ActionTableViewCell *)cell {
     [[TwitterClient sharedInstance] favoriteWithId:self.tweet.tweetId completion:^(NSArray *response, NSError *error) {
-        [self.tableView reloadData];
-        NSLog(@"%@", response);
-        NSLog(@"%@", error);
+        if (error != nil) {
+            self.tweet.favorite_count = self.tweet.favorite_count + 1;
+            self.tweet.favorited = TRUE;
+            [self.tableView reloadData];
+        } else {
+            NSLog(@"%@", error);
+        }
     }];
 }
 

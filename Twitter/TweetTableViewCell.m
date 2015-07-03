@@ -31,4 +31,13 @@
 
 }
 
+- (IBAction)onReply:(id)sender {
+    [self.delegate onClickReplyTweetTableViewCell:self];
+}
+- (IBAction)onRetweetBtn:(id)sender {
+    
+}
+- (IBAction)onFavoriteBtn:(id)sender {
+    
+}
 @end

@@ -18,5 +18,6 @@
 @property (strong, nonatomic) NSString *nameStr;
 @property (strong, nonatomic) NSString *screenNameStr;
 @property (assign, nonatomic) NSInteger tweetId;
+@property (assign, nonatomic) BOOL isNewTweet;
 
 @end

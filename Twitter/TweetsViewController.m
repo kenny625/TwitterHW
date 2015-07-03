@@ -12,8 +12,9 @@
 #import "Tweet.h"
 #import "TweetTableViewCell.h"
 #import "DetailTableViewController.h"
+#import "ComposeViewController.h"
 
-@interface TweetsViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface TweetsViewController () <UITableViewDelegate, UITableViewDataSource, TweetTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic, strong) NSArray *tweets;
 @end
@@ -35,7 +36,14 @@
     self.navigationController.navigationBar.translucent = YES;
     self.navigationController.navigationBarHidden = NO;
     // Do any additional setup after loading the view from its nib.
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
     [[TwitterClient sharedInstance] homeTimeLineWithParams:nil completion:^(NSArray *tweets, NSError *error) {
+        if (error != nil) {
+            NSLog(@"Timeline error %@", error);
+        }
         self.tweets = tweets;
         [self.tableview reloadData];
     }];
@@ -48,7 +56,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TweetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
+    cell.delegate = self;
     cell.tweet = self.tweets[indexPath.row];
+    if (cell.tweet.favorited) {
+        UIImage *image = [UIImage imageNamed: @"favorite_on.png"];
+        [cell.favoriteBtn setImage:image forState:UIControlStateNormal];
+    }
+    if (cell.tweet.retweeted) {
+        UIImage *image = [UIImage imageNamed: @"retweet_on.png"];
+        [cell.retweetBtn setImage:image forState:UIControlStateNormal];
+    }
     return cell;
 }
 
@@ -80,6 +97,34 @@
 }
 
 - (void)onNewTweet {
+    ComposeViewController *composeViewController = [[ComposeViewController alloc] initWithNibName:@"ComposeViewController" bundle:nil];
+    User *user = [User currentUser];
+    composeViewController.nameStr = user.name;
+    composeViewController.screenNameStr = user.screenname;
+    composeViewController.userImgUrl = user.profileImageUrl;
+    composeViewController.isNewTweet = TRUE;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:composeViewController];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)onClickReplyTweetTableViewCell:(TweetTableViewCell *)cell {
+    ComposeViewController *composeViewController = [[ComposeViewController alloc] initWithNibName:@"ComposeViewController" bundle:nil];
+    User *user = [User currentUser];
+    composeViewController.nameStr = user.name;
+    composeViewController.screenNameStr = user.screenname;
+    composeViewController.userImgUrl = user.profileImageUrl;
+    Tweet *tweet = self.tweets[[self.tableview indexPathForCell:cell].row];
+    composeViewController.tweetId = tweet.tweetId;
+    composeViewController.isNewTweet = FALSE;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:composeViewController];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)onClickRetweetTweetTableViewCell:(TweetTableViewCell *)cell {
+    
+}
+
+- (void)onClickFavoriteTweetTableViewCell:(TweetTableViewCell *)cell {
     
 }
 
