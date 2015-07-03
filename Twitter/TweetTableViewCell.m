@@ -35,9 +35,9 @@
     [self.delegate onClickReplyTweetTableViewCell:self];
 }
 - (IBAction)onRetweetBtn:(id)sender {
-    
+    [self.delegate onClickRetweetTweetTableViewCell:self];
 }
 - (IBAction)onFavoriteBtn:(id)sender {
-    
+    [self.delegate onClickFavoriteTweetTableViewCell:self];
 }
 @end

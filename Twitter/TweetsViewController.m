@@ -17,6 +17,7 @@
 @interface TweetsViewController () <UITableViewDelegate, UITableViewDataSource, TweetTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic, strong) NSArray *tweets;
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
 @end
 
 @implementation TweetsViewController
@@ -37,6 +38,25 @@
     self.navigationController.navigationBarHidden = NO;
     // Do any additional setup after loading the view from its nib.
     
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.backgroundColor = [UIColor purpleColor];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    [self.refreshControl addTarget:self
+                            action:@selector(refreshData)
+                  forControlEvents:UIControlEventValueChanged];
+    [self.tableview addSubview:self.refreshControl];
+    
+}
+
+- (void)refreshData {
+    [[TwitterClient sharedInstance] homeTimeLineWithParams:nil completion:^(NSArray *tweets, NSError *error) {
+        if (error != nil) {
+            NSLog(@"Timeline error %@", error);
+        }
+        self.tweets = tweets;
+        [self.tableview reloadData];
+        [self.refreshControl endRefreshing];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -121,11 +141,33 @@
 }
 
 - (void)onClickRetweetTweetTableViewCell:(TweetTableViewCell *)cell {
-    
+    Tweet *tweet = self.tweets[[self.tableview indexPathForCell:cell].row];
+    [[TwitterClient sharedInstance] retweetWithId:tweet.tweetId completion:^(NSArray *response, NSError *error) {
+        UIImage *image = [UIImage imageNamed: @"retweet_on.png"];
+        [cell.retweetBtn setImage:image forState:UIControlStateNormal];
+        [[TwitterClient sharedInstance] homeTimeLineWithParams:nil completion:^(NSArray *tweets, NSError *error) {
+            if (error != nil) {
+                NSLog(@"Timeline error %@", error);
+            }
+            self.tweets = tweets;
+            [self.tableview reloadData];
+        }];
+    }];
 }
 
 - (void)onClickFavoriteTweetTableViewCell:(TweetTableViewCell *)cell {
-    
+    Tweet *tweet = self.tweets[[self.tableview indexPathForCell:cell].row];
+    [[TwitterClient sharedInstance] favoriteWithId:tweet.tweetId completion:^(NSArray *response, NSError *error) {
+        UIImage *image = [UIImage imageNamed: @"favorite_on.png"];
+        [cell.favoriteBtn setImage:image forState:UIControlStateNormal];
+        [[TwitterClient sharedInstance] homeTimeLineWithParams:nil completion:^(NSArray *tweets, NSError *error) {
+            if (error != nil) {
+                NSLog(@"Timeline error %@", error);
+            }
+            self.tweets = tweets;
+            [self.tableview reloadData];
+        }];
+    }];
 }
 
 /*

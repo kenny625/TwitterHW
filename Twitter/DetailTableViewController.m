@@ -117,26 +117,18 @@
 - (void)onClickRetweetActionTableViewCell:(ActionTableViewCell *)cell {
     [[TwitterClient sharedInstance] retweetWithId:self.tweet.tweetId completion:^(NSArray *response, NSError *error) {
         [[TwitterClient sharedInstance] homeTimeLineWithParams:nil completion:^(NSArray *tweets, NSError *error) {
-            if (error == nil) {
-                self.tweet.retweet_count = self.tweet.retweet_count + 1;
-                self.tweet.retweeted = TRUE;
-                [self.tableView reloadData];
-            } else {
-                NSLog(@"%@", error);
-            }
+            self.tweet.retweet_count = self.tweet.retweet_count + 1;
+            self.tweet.retweeted = TRUE;
+            [self.tableView reloadData];
         }];
     }];
 }
 
 - (void)onClickFavoriteActionTableViewCell:(ActionTableViewCell *)cell {
     [[TwitterClient sharedInstance] favoriteWithId:self.tweet.tweetId completion:^(NSArray *response, NSError *error) {
-        if (error != nil) {
-            self.tweet.favorite_count = self.tweet.favorite_count + 1;
-            self.tweet.favorited = TRUE;
-            [self.tableView reloadData];
-        } else {
-            NSLog(@"%@", error);
-        }
+        self.tweet.favorite_count = self.tweet.favorite_count + 1;
+        self.tweet.favorited = TRUE;
+        [self.tableView reloadData];
     }];
 }
 
